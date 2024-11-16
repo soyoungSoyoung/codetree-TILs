@@ -20,7 +20,10 @@ public class Main {
             if(customs[i] > 0) {
                 answer += customs[i] / won;
                 customs[i] %= won;
-                if(won > 0) answer++;
+                if(customs[i] > 0) {
+                    answer++;
+                    
+                }
             }
         }
         
