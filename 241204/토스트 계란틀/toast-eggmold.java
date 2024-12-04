@@ -17,59 +17,59 @@ public class Main { //코드트리_토스트 계란틀
 				}
 			}
 			
+//			System.out.println(ans);
+//			for(int[] i: openTheDoor) {
+//				System.out.println(Arrays.toString(i));
+//			}
+//			System.out.println();
+			
 			if(sum == 0) break;
 			
 			//열려 있으면 평균내기
 			flatten(openTheDoor);
 			ans++;
+			
+//			for(int[] i: map) {
+//				System.out.println(Arrays.toString(i));
+//			}
+//			System.out.println("-----------");
 		}
 		
 		System.out.println(ans);
 	}
 
 	private static void flatten(int[][] openTheDoor) {
-		for(int i=0; i<n; i++) {
-			for(int j=0; j<n; j++) {
+		int maxNum = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				maxNum = Math.max(maxNum, openTheDoor[i][j]);
+			}
+		}
+		
+		List<int[]>[] groups = new ArrayList[maxNum];
+		for (int i = 0; i < groups.length; i++) {
+			groups[i] = new ArrayList<>();
+		}
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
 				if(openTheDoor[i][j] != 0) {
-					bbfs_토계(openTheDoor, i,j); //방문 처리는 0으로 하기
+					groups[openTheDoor[i][j]-1].add(new int[] {i, j});
 				}
 			}
 		}
-	}
-
-	private static void bbfs_토계(int[][] openTheDoor, int x, int y) {
-		int[] dx = {-1,1,0,0};
-		int[] dy = {0,0,-1,1};
 		
-		int num = openTheDoor[x][y];
-		openTheDoor[x][y]=0;
-		int cnt = 1;
-		int sum = map[x][y];
-		List<int[]> group = new ArrayList<>();
-		group.add(new int[] {x,y});
-		
-		Queue<int[]> q = new ArrayDeque<>();
-		q.add(new int[] {x,y});
-		
-		while(!q.isEmpty()) {
-			int[] p = q.poll();
+		for (int i = 0; i < groups.length; i++) {
+			int cnt = groups[i].size();
+			int sum = 0;
+			for (int j = 0; j < cnt; j++) {
+				sum += map[groups[i].get(j)[0]][groups[i].get(j)[1]];
+			}
 			
-			for(int d=0; d<4; d++) {
-				int nx = p[0] + dx[d];
-				int ny = p[1] + dy[d];
-				
-				if(nx>=0&&nx<n && ny>=0&&ny<n && num == openTheDoor[nx][ny]) {
-					openTheDoor[nx][ny] = 0;
-					cnt++;
-					sum += map[nx][ny];
-					group.add(new int[] {nx,ny});
-				}
+			int eggs = sum / cnt;
+			for (int j = 0; j < cnt; j++) {
+				map[groups[i].get(j)[0]][groups[i].get(j)[1]] = eggs;
 			}
-		}
-		
-		int newEggs = sum / cnt;
-		for(int[] p : group) {
-			map[p[0]][p[1]] = newEggs;
 		}
 	}
 
