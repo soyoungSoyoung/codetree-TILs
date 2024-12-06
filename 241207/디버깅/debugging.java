@@ -38,8 +38,11 @@ public class Main {
 		
 		// (교점에서 다시 이을 순 없음_)
 		for (int i = r+1; i < h; i++) {
-			if(map[i][c]==1 && canPut(i,c))
+			if(map[i][c]==1 && canPut(i,c)) {
+				map[i][c] = 0;
 				combi(cnt+1 ,i,c);
+				map[i][c] = 1;
+			}
 		}
 		for (int i = 0; i < h; i++) {
 			for (int j = c+2; j < n+n-1; j+=2) {
