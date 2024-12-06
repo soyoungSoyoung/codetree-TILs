@@ -18,7 +18,7 @@ public class Main {
 	private static void combi(int cnt, int r, int c) {
 		if(answer == 1)
 			return;
-		if(cnt >=1 && cnt <= 3) {
+		if(cnt <= 3) {
 			boolean right = program();
 			//
 //			for(int i=0; i<map.length; i++) {
